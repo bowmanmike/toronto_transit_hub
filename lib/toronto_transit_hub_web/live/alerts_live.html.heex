@@ -1,10 +1,12 @@
 <section>
   <h2>TTC</h2>
   <p>There are currently <%= length(@ttc_alerts.alerts) %> active alerts on the TTC.</p>
+  <div class="flex flex-wrap w-full items-center justify-center">
   <%= for alert <- @ttc_alerts.alerts do %>
-    <div>
-    <p><%= alert.title%></p>
-    <p>Affecting these routes: <%= alert.route %></p>
+    <div class="rounded border-gray-200 border shadow-md w-1/4 p-2 m-2">
+      <p><%= alert.title %></p>
+      <p>Affecting these routes: <%= alert.route %></p>
     </div>
   <% end %>
+  </div>
 </section>

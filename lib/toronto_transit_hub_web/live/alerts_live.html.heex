@@ -10,3 +10,27 @@
   <% end %>
   </div>
 </section>
+<section>
+  <h2>Go</h2>
+  <p>There are currently <%= length(@go_alerts.alerts) %> active alerts on the Go.</p>
+  <div class="flex flex-wrap w-full items-center justify-center">
+  <%= for alert <- @go_alerts.alerts do %>
+    <div class="rounded border-gray-200 border shadow-md w-1/4 p-2 m-2">
+      <p><%= alert.route_name %></p>
+      <p>Affecting these routes: <%= alert.route_number %></p>
+    </div>
+  <% end %>
+  </div>
+</section>
+<section>
+<h2>UP Express</h2>
+<p>There are currently <%= length(@up_alerts.alerts) %> active alerts on the UP Express.</p>
+  <div class="flex flex-wrap w-full items-center justify-center">
+  <%= for alert <- @up_alerts.alerts do %>
+    <div class="rounded border-gray-200 border shadow-md w-1/4 p-2 m-2">
+      <p><%= alert.route_name %></p>
+      <p>Affecting these routes: <%= alert.route_number %></p>
+    </div>
+  <% end %>
+  </div>
+</section>

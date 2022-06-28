@@ -7,12 +7,16 @@ defmodule TorontoTransitHub.Clients.TTCClient do
     |> parse_response()
   end
 
-  defp parse_response(%Req.Response{body: data}) do
+  defp parse_response(%Req.Response{body: data, status: 200}) do
     %{
       last_updated: data["lastUpdated"],
       alerts: parse_alerts(data)
     }
   end
+
+  # defp parse_response(%Req.Response{status: status, body: body}) do
+  #   require IEx; IEx.pry()
+  # end
 
   def parse_alerts(data) do
     data

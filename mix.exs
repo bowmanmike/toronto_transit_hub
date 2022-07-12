@@ -34,6 +34,7 @@ defmodule TorontoTransitHub.MixProject do
   defp deps do
     [
       {:ecto_sql, "~> 3.6"},
+      {:ecto_psql_extras, "~> 0.6"},
       {:esbuild, "~> 0.4", runtime: Mix.env() == :dev},
       {:floki, ">= 0.30.0"},
       {:gettext, "~> 0.18"},

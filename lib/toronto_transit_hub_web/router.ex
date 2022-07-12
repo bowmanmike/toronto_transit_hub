@@ -14,6 +14,10 @@ defmodule TorontoTransitHubWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :admins_only do
+    plug :admin_basic_auth
+  end
+
   scope "/", TorontoTransitHubWeb do
     pipe_through :browser
 
@@ -32,14 +36,22 @@ defmodule TorontoTransitHubWeb.Router do
   # If your application does not have an admins-only section yet,
   # you can use Plug.BasicAuth to set up some basic authentication
   # as long as you are also using SSL (which you should anyway).
-  if Mix.env() in [:dev, :test] do
-    import Phoenix.LiveDashboard.Router
+  import Phoenix.LiveDashboard.Router
 
-    scope "/" do
+  scope "/" do
+    if Mix.env() in [:dev, :test] do
       pipe_through :browser
-
-      live_dashboard "/dashboard", metrics: TorontoTransitHubWeb.Telemetry
+    else
+      pipe_through [:browser, :admins_only]
     end
+
+    live_dashboard "/dashboard", metrics: TorontoTransitHubWeb.Telemetry
+  end
+
+  defp admin_basic_auth(conn, _opts) do
+    username = System.fetch_env!("AUTH_USERNAME")
+    password = System.fetch_env!("AUTH_PASSWORD")
+    Plug.BasicAuth.basic_auth(conn, username: username, password: password)
   end
 
   # Enables the Swoosh mailbox preview in development.

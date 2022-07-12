@@ -8,22 +8,23 @@ defmodule TorontoTransitHub.Clients.UPExpressClient do
   end
 
   defp parse_response(%Req.Response{body: data, status: 200}) do
-    res = data
-    |> Floki.parse_document!()
-    |> Floki.find("#serviceStatusLeftMargin")
-    |> Floki.find("h3 ~ div")
-    |> Floki.text()
-    |> String.trim()
-    |> String.split("\r\n")
-    |> Enum.map(&String.trim/1)
-    |> Enum.chunk_every(2)
-    |> Enum.map(fn [first, second] ->
-      [station, date] = String.split(first, " Station")
-      # probably need to use timex to parse the datetime
-    end)
+    res =
+      data
+      |> Floki.parse_document!()
+      |> Floki.find("#serviceStatusLeftMargin")
+      |> Floki.find("h3 ~ div")
+      |> Floki.text()
+      |> String.trim()
+      |> String.split("\r\n")
+      |> Enum.map(&String.trim/1)
+      |> Enum.chunk_every(2)
+      |> Enum.map(fn [first, second] ->
+        [station, date] = String.split(first, " Station")
+        # probably need to use timex to parse the datetime
+      end)
 
-    require IEx
-    IEx.pry()
+    # require IEx
+    # IEx.pry()
     res
   end
 end

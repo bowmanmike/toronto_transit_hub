@@ -12,7 +12,8 @@ defmodule TorontoTransitHubWeb.AlertsLive do
     assigns = %{
       ttc_alerts: nil,
       go_alerts: nil,
-      up_alerts: nil
+      up_alerts: nil,
+      last_updated: nil
     }
 
     {:ok, assign(socket, assigns)}
@@ -20,9 +21,10 @@ defmodule TorontoTransitHubWeb.AlertsLive do
 
   @impl true
   def handle_info(:get_ttc_alerts, socket) do
-    %{alerts: alerts} = TTCClient.live_alerts()
+    %{alerts: alerts, last_updated: last_updated} = TTCClient.live_alerts()
 
-    {:noreply, assign(socket, :ttc_alerts, alerts)}
+    socket = socket |> assign(:ttc_alerts, alerts) |> assign(:last_updated, last_updated)
+    {:noreply, socket}
   end
 
   def handle_info(:get_go_alerts, socket) do

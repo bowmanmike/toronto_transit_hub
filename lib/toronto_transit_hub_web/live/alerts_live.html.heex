@@ -3,9 +3,10 @@
     service_name="TTC"
     alerts={@ttc_alerts}
     service_colour="#da251d"
+    last_updated={@last_updated}
   />
 </section>
-<section>
+<%# <section>
   <TorontoTransitHubWeb.Live.Components.TransitServiceDisplay.render
     service_name="Go"
     alerts={@go_alerts}
@@ -18,4 +19,4 @@
     alerts={@up_alerts}
     service_colour="#3274cc"
   />
-</section>
+</section> %>

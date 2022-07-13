@@ -1,4 +1,6 @@
 defmodule TorontoTransitHub.Clients.TTCClient do
+  alias TorontoTransitHub.Alert
+
   @live_alerts_url "https://alerts.ttc.ca/api/alerts/live-alerts"
 
   def live_alerts do
@@ -8,10 +10,14 @@ defmodule TorontoTransitHub.Clients.TTCClient do
   end
 
   defp parse_response(%Req.Response{body: data, status: 200}) do
+    {:ok, timestamp, _} = parse_last_updated(data["lastUpdated"])
+
     %{
-      last_updated: data["lastUpdated"],
+      last_updated: timestamp,
       alerts: parse_alerts(data)
     }
+
+    # |> IO.inspect()
   end
 
   # defp parse_response(%Req.Response{status: status, body: body}) do
@@ -25,7 +31,7 @@ defmodule TorontoTransitHub.Clients.TTCClient do
     |> Enum.filter(&is_list/1)
     |> Enum.concat()
     |> Enum.map(fn alert ->
-      %{
+      attrs = %{
         accessibility: alert["accessibility"],
         active_period_start: get_in(alert, ["activePeriod", "start"]),
         active_period_end: get_in(alert, ["activePeriod", "end"]),
@@ -37,7 +43,7 @@ defmodule TorontoTransitHub.Clients.TTCClient do
         id: String.to_integer(alert["id"]),
         last_updated: alert["lastUpdated"],
         priority: alert["priority"],
-        route: alert["route"],
+        routes: alert["route"],
         route_branch: alert["routeBranch"],
         route_type: alert["routeType"],
         route_type_src: alert["routeTypeSrc"],
@@ -47,6 +53,16 @@ defmodule TorontoTransitHub.Clients.TTCClient do
         url: alert["url"],
         url_placeholder: alert["urlPlaceholder"]
       }
+
+      Alert.changeset(%Alert{}, attrs)
     end)
+  end
+
+  defp parse_last_updated(timestamp) do
+    case String.ends_with?(timestamp, "Z") do
+      true -> timestamp
+      false -> "#{timestamp}Z"
+    end
+    |> DateTime.from_iso8601()
   end
 end

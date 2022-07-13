@@ -17,22 +17,22 @@
   </head>
   <body>
     <div class="min-h-full">
-      <div class="py-10">
-        <header>
-          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 class="text-3xl font-bold leading-tight text-gray-900">Toronto Transit Hub</h1>
+      <header class="py-6 bg-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 class="text-3xl font-bold leading-tight text-gray-900 text-center">
+            Toronto Transit Hub
+          </h1>
+        </div>
+      </header>
+      <main>
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+          <!-- Replace with your content -->
+          <div class="px-4 py-8 sm:px-0 text-gray-700">
+            <%= @inner_content %>
           </div>
-        </header>
-        <main>
-          <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <!-- Replace with your content -->
-            <div class="px-4 py-8 sm:px-0">
-              <%= @inner_content %>
-            </div>
-            <!-- /End replace -->
-          </div>
-        </main>
-      </div>
+          <!-- /End replace -->
+        </div>
+      </main>
     </div>
   </body>
 </html>

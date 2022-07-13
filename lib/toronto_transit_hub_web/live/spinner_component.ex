@@ -7,7 +7,7 @@ defmodule TorontoTransitHubWeb.Live.Spinner do
     ~H"""
     <svg
       role="status"
-      class="inline py mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600"
+      class="inline py mr-2 w-8 h-8 text-gray-200 animate-spin"
       style={"fill: #{assigns.colour}"}
       viewBox="0 0 100 101"
       fill="none"

@@ -5,16 +5,13 @@ defmodule TorontoTransitHubWeb.AlertsLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    # Process.send_after(self(), :get_ttc_alerts, 0)
+    Process.send_after(self(), :get_ttc_alerts, 0)
     # Process.send_after(self(), :get_go_alerts, 0)
     # Process.send_after(self(), :get_up_alerts, 0)
 
     assigns = %{
-      message: "Hello!",
       ttc_alerts: nil,
-      # go_alerts: GoClient.alerts(),
       go_alerts: nil,
-      # up_alerts: UPExpressClient.alerts()
       up_alerts: nil
     }
 

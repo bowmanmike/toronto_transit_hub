@@ -1,48 +1,21 @@
 <section>
-  <h2>TTC</h2>
-  <div>
-    <%= unless @ttc_alerts do %>
-      <TorontoTransitHubWeb.Live.Spinner.render colour="#da251d" />
-    <% else %>
-      <p>There are currently <%= length(@ttc_alerts) %> active alerts on the TTC.</p>
-      <%= for alert <- @ttc_alerts do %>
-        <div class="rounded border-gray-200 border shadow-md w-1/4 p-2 m-2">
-          <p><%= alert.title %></p>
-          <p>Affecting these routes: <%= alert.route %></p>
-        </div>
-      <% end %>
-    <% end %>
-  </div>
+  <TorontoTransitHubWeb.Live.Components.TransitServiceDisplay.render
+    service_name="TTC"
+    alerts={@ttc_alerts}
+    service_colour="#da251d"
+  />
 </section>
 <section>
-  <h2>Go</h2>
-  <%= unless @go_alerts do %>
-      <TorontoTransitHubWeb.Live.Spinner.render colour="#256c2f" />
-  <% else %>
-    <p>There are currently <%= length(@go_alerts) %> active alerts on the Go.</p>
-    <div class="flex flex-wrap w-full items-center justify-center">
-      <%= for alert <- @go_alerts do %>
-        <div class="rounded border-gray-200 border shadow-md w-1/4 p-2 m-2">
-          <p><%= alert.route_name %></p>
-          <p>Affecting these routes: <%= alert.route_number %></p>
-        </div>
-      <% end %>
-    </div>
-  <% end %>
+  <TorontoTransitHubWeb.Live.Components.TransitServiceDisplay.render
+    service_name="Go"
+    alerts={@go_alerts}
+    service_colour="#256c2f"
+  />
 </section>
 <section>
-  <h2>UP Express</h2>
-  <%= unless @up_alerts do %>
-      <TorontoTransitHubWeb.Live.Spinner.render colour="#3274cc" />
-  <% else %>
-    <p>There are currently <%= length(@up_alerts) %> active alerts on the UP Express.</p>
-    <div class="flex flex-wrap w-full items-center justify-center">
-      <%= for alert <- @up_alerts do %>
-        <div class="rounded border-gray-200 border shadow-md w-1/4 p-2 m-2">
-          <p><%= alert.route_name %></p>
-          <p>Affecting these routes: <%= alert.route_number %></p>
-        </div>
-      <% end %>
-    </div>
-  <% end %>
+  <TorontoTransitHubWeb.Live.Components.TransitServiceDisplay.render
+    service_name="UP Express"
+    alerts={@up_alerts}
+    service_colour="#3274cc"
+  />
 </section>

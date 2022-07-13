@@ -18,7 +18,7 @@ defmodule TorontoTransitHubWeb.Live.Components.TransitServiceDisplay do
           </p>
           <div class="flex flex-wrap gap-2">
             <%= for alert <- @alerts do %>
-              <div class="">
+              <div class="w-full border border-gray-400 rounded-md shadow-sm p-2">
                 <p><%= alert.title %></p>
                 <p>Affecting these routes: <%= Enum.join(alert.routes, ", ") %></p>
               </div>

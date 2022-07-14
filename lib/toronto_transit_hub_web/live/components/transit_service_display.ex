@@ -1,12 +1,11 @@
 defmodule TorontoTransitHubWeb.Live.Components.TransitServiceDisplay do
-  # use TorontoTransitHubWeb, :live_component
   use Phoenix.Component
 
   def render(assigns) do
     ~H"""
-    <div>
-      <heading class="text-xl font-semibold"><%= @service_name %></heading>
-      <div>
+    <div class="p-2 rounded-md w-full bg-ttc-500/25">
+      <heading class="text-2xl italic font-semibold text-ttc-50"><%= @service_name %></heading>
+      <div class="mt-4">
         <%= unless @alerts do %>
           <TorontoTransitHubWeb.Live.Spinner.render colour={@service_colour} />
         <% else %>
@@ -18,7 +17,7 @@ defmodule TorontoTransitHubWeb.Live.Components.TransitServiceDisplay do
           </p>
           <div class="flex flex-wrap gap-2">
             <%= for alert <- @alerts do %>
-              <div class="w-full border border-gray-400 rounded-md shadow-sm p-2">
+              <div class="w-full border border-slate-700 rounded-md shadow-sm p-2">
                 <p><%= alert.title %></p>
                 <p>Affecting these routes: <%= Enum.join(alert.routes, ", ") %></p>
               </div>

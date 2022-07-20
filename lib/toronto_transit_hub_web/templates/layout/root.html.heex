@@ -17,15 +17,24 @@
   </head>
   <body class="bg-slate-50 text-slate-700">
     <div class="lg:max-w-4xl md:max-w-2xl mx-auto">
-      <header class="py-4">
-        <h1 class="mx-auto text-4xl font-semibold text-center">
+      <header class="py-4 mb-4">
+        <h1 class="mx-auto mb-4 text-4xl font-semibold text-center">
           Toronto Transit Hub
         </h1>
+        <nav class="flex justify-center gap-4 text-xl">
+          <a href="#ttc">TTC</a>
+          <a href="#go">Go Transit</a>
+        </nav>
       </header>
       <main class="my-2">
-          <%= @inner_content %>
+        <%= @inner_content %>
       </main>
     </div>
-    <footer class="text-center mt-4"><p>&copy; 2022 Mike Bowman &mdash; <a class="underline" href="https://mikebowman.dev">https://mikebowman.dev</a></p></footer>
+    <footer class="text-center mt-4">
+      <p>
+        &copy; 2022 Mike Bowman &mdash;
+        <a class="underline" href="https://mikebowman.dev">https://mikebowman.dev</a>
+      </p>
+    </footer>
   </body>
 </html>

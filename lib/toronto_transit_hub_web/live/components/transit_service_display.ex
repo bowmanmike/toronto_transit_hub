@@ -4,7 +4,9 @@ defmodule TorontoTransitHubWeb.Live.Components.TransitServiceDisplay do
   def render(assigns) do
     ~H"""
     <div class={"p-2 rounded-md w-full bg-#{String.downcase(@service_name)}-500/25"}>
-      <heading class="text-2xl italic font-semibold"><%= @service_name %></heading>
+      <heading class="text-2xl italic font-semibold" id={"#{String.downcase(@service_name)}"}>
+        <%= @service_name %>
+      </heading>
       <div class="mt-4">
         <%= unless @alerts do %>
           <TorontoTransitHubWeb.Live.Spinner.render colour={@service_colour} />

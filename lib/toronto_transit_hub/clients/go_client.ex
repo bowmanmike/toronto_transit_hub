@@ -11,6 +11,7 @@ defmodule TorontoTransitHub.Clients.GoClient do
 
   defp parse_response(%Req.Response{body: data}) do
     {_, timestamp, _} = DateTime.from_iso8601(data["LastUpdated"])
+
     %{
       last_updated: timestamp,
       alerts: parse_alerts(data)

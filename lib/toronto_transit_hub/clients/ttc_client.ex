@@ -16,13 +16,7 @@ defmodule TorontoTransitHub.Clients.TTCClient do
       last_updated: timestamp,
       alerts: parse_alerts(data)
     }
-
-    # |> IO.inspect()
   end
-
-  # defp parse_response(%Req.Response{status: status, body: body}) do
-  #   require IEx; IEx.pry()
-  # end
 
   def parse_alerts(data) do
     data

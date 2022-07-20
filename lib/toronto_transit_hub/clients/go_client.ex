@@ -1,4 +1,6 @@
 defmodule TorontoTransitHub.Clients.GoClient do
+  alias TorontoTransitHub.Alert
+
   @alerts_url "https://api.gotransit.com/Api/ServiceUpdate/en/all"
 
   def alerts do
@@ -8,33 +10,38 @@ defmodule TorontoTransitHub.Clients.GoClient do
   end
 
   defp parse_response(%Req.Response{body: data}) do
+    {_, timestamp, _} = DateTime.from_iso8601(data["LastUpdated"])
     %{
-      last_updated: data["LastUpdated"],
+      last_updated: timestamp,
       alerts: parse_alerts(data)
     }
   end
 
   defp parse_alerts(data) do
-    res =
-      data
-      |> Map.take(["Trains", "Buses", "Stations"])
-      |> Enum.flat_map(fn
-        {_k, %{"TotalUpdates" => 0}} ->
-          []
+    data
+    |> Map.take(["Trains"])
+    |> Enum.flat_map(fn
+      {_k, %{"TotalUpdates" => 0}} ->
+        []
 
-        {k, v} ->
-          flatten_alerts(k, v)
-          |> Enum.map(fn alert ->
-            %{
-              route_name: alert["RouteName"],
-              route_number: alert["RouteNumber"]
-            }
-          end)
-      end)
+      {k, v} ->
+        flatten_alerts(k, v)
+        |> Enum.flat_map(fn
+          %{"Notifications" => %{"Notification" => []}} ->
+            []
 
-    # require IEx
-    # IEx.pry()
-    res
+          %{"Notifications" => %{"Notification" => notifications}} = alert ->
+            notifications
+            |> Enum.map(fn notif ->
+              attrs = %{
+                routes: alert["CorridorName"],
+                title: notif["MessageSubject"]
+              }
+
+              Alert.changeset(%Alert{}, attrs)
+            end)
+        end)
+    end)
   end
 
   defp flatten_alerts("Buses", bus_alerts), do: bus_alerts["Bus"]

@@ -10,6 +10,7 @@ defmodule TorontoTransitHub.Clients.GoClient do
   end
 
   defp parse_response(%Req.Response{body: data}) do
+    # TODO: this is showing the time in UTC not our timezone
     {_, timestamp, _} = DateTime.from_iso8601(data["LastUpdated"])
 
     %{

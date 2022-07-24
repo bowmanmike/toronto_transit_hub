@@ -15,9 +15,10 @@ defmodule TorontoTransitHub.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: TorontoTransitHub.PubSub},
       # Start the Endpoint (http/https)
-      TorontoTransitHubWeb.Endpoint
+      TorontoTransitHubWeb.Endpoint,
       # Start a worker by calling: TorontoTransitHub.Worker.start_link(arg)
-      # {TorontoTransitHub.Worker, arg}
+      {TorontoTransitHub.Alerts.State, %{ttc: nil, go: nil}},
+      {TorontoTransitHub.Alerts.Poller, nil}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
